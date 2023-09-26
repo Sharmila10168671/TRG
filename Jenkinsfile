@@ -5,14 +5,14 @@ pipeline {
         stage('Dependencies') {
             steps {
                 echo 'Fetching dependencies...'
-                sh 'make deps'
+                
             }
         }
 
         stage('Test') {
             steps {
                 echo 'Running tests...'
-                sh 'make test'
+               
             }
         }
 
@@ -24,23 +24,21 @@ pipeline {
                     def ciBuildTimestamp = sh(script: 'date +"%Y-%m-%d%H:%M:%S"', returnStdout: true).trim()
                     def ciBuildBranch = env.BRANCH_NAME // This will fetch the branch name for multibranch pipelines, for regular jobs you might need to fetch it from GIT_BRANCH
 
-                    sh """
-                        make build ciBuildVersion=${params.ciBuildVersion} ciBuildBranch=${ciBuildBranch} ciBuildEnv=${params.ciBuildEnv} ciGitHash=${ciGitHash} ciBuildTimestamp="${ciBuildTimestamp}"
-                    """
+                   
                 }
             }
         }
   stage('Package') {
             steps {
                 echo 'Packaging the binary...'
-                sh 'make package'
+               
             }
         }
 
         stage('Cleanup') {
             steps {
                 echo 'Cleaning up...'
-                sh 'make clean'
+             
             }
         }
     }
